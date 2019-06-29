@@ -46,7 +46,6 @@ fn make_skin() -> MadSkin {
     skin.bold.set_fg(Yellow);
     skin.italic.set_fg(White);
     skin.scrollbar.set_thumb_fg(AnsiValue(178));
-    skin.code.align = Alignment::Center;
     skin
 }
 

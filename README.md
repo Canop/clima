@@ -12,3 +12,19 @@ Which isn't really useful as Termimad hasn't been designed to display any markdo
 Maybe I'll add the missing features to Termimad, then to **Clima**.
 
 In the meantime *the only reasonnable usage of **Clima*** is to try out or fix some markdown you'd like to incorporate into your terminal application using Termimad and that you prefer to edit as a file.
+
+## Usage
+
+Fetch the repository, go to it, then do
+
+    cargo build -release
+
+The executable is in `target/release`. You may now ensure it's found when you need it. For example:
+
+    sudo ln -s path-to-clima/target/release/clima /usr/bin/clima
+
+To open a file, just pass its path:
+
+    clima README.md
+
+
