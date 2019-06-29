@@ -1,0 +1,19 @@
+[package]
+name = "clima"
+version = "0.0.1"
+authors = ["dystroy <denys.seguret@gmail.com>"]
+repository = "https://github.com/Canop/clima"
+description = "A minimal Markdown reader in the terminal"
+edition = "2018"
+keywords = ["cli", "markdown"]
+license = "MIT"
+categories = ["command-line-utilities"]
+readme = "README.md"
+
+[dependencies]
+custom_error = "1.6"
+log = "0.4"
+simplelog = "0.6"
+clap = "2.33"
+crossterm = "0.9.6"
+termimad = "0.3.9"
