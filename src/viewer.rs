@@ -45,7 +45,7 @@ fn make_skin() -> MadSkin {
     skin.set_headers_fg(Yellow);
     skin.bold.set_fg(Yellow);
     skin.italic.set_fg(White);
-    skin.scrollbar.set_thumb_fg(AnsiValue(178));
+    skin.scrollbar.thumb.set_fg(AnsiValue(178));
     skin
 }
 
