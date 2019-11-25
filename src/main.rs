@@ -51,8 +51,7 @@ fn configure_log() {
 /// which must be run after clima
 fn run() -> Result<(), ProgramError> {
     configure_log();
-    let launch_args = cli::read_launch_args()?;
-    viewer::run(&launch_args.target)?;
+    viewer::run(cli::read_launch_args()?)?;
     Ok(())
 }
 

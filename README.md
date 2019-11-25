@@ -18,8 +18,12 @@ The executable is in `target/release`. You may now ensure it's found when you ne
 
     sudo ln -s path-to-clima/target/release/clima /usr/bin/clima
 
-To open a file, just pass its path:
+To open a file in the viewer, just pass its path:
 
     clima README.md
+
+If you add the `--print` option, the file is just printed to stdout, the scrollable viewer doesn't appear:
+
+    clima -p README.md
 
 

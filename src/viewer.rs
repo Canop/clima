@@ -56,23 +56,26 @@ fn make_skin() -> MadSkin {
     skin
 }
 
-pub fn run(target: &Path) -> Result<()> {
-    let markdown = fs::read_to_string(target)?;
+pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<()> {
+    let target = launch_args.target;
+    let markdown = fs::read_to_string(&target)?;
     let skin = make_skin();
 
-    let mut w = std::io::stderr();
-    queue!(w, EnterAlternateScreen)?;
-    queue!(w, cursor::Hide)?; // hiding the cursor
-    let _raw_screen = RawScreen::into_raw_mode()?;
-
-    let mut main_area = Area::full_screen();
-    main_area.pad(0, 1);
-    show_path(&mut w, 0, &skin, target)?;
-    show_help(&mut w, main_area.top + main_area.height + 1, &skin)?;
-    run_scrollable(&mut w, main_area, skin, &markdown)?;
-
-    queue!(w, cursor::Show)?;
-    queue!(w, LeaveAlternateScreen)?;
-    w.flush()?;
+    if launch_args.just_print {
+        skin.print_text(&markdown);
+    } else {
+        let mut w = std::io::stderr();
+        queue!(w, EnterAlternateScreen)?;
+        queue!(w, cursor::Hide)?; // hiding the cursor
+        let _raw_screen = RawScreen::into_raw_mode()?;
+        let mut main_area = Area::full_screen();
+        main_area.pad(0, 1);
+        show_path(&mut w, 0, &skin, &target)?;
+        show_help(&mut w, main_area.top + main_area.height + 1, &skin)?;
+        run_scrollable(&mut w, main_area, skin, &markdown)?;
+        queue!(w, cursor::Show)?;
+        queue!(w, LeaveAlternateScreen)?;
+        w.flush()?;
+    }
     Ok(())
 }
