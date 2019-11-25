@@ -1,5 +1,11 @@
 #[macro_use]
+extern crate minimad;
+#[macro_use]
+extern crate lazy_static;
+#[macro_use]
 extern crate log;
+#[macro_use]
+extern crate termimad;
 
 mod cli;
 mod errors;

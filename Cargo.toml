@@ -11,9 +11,11 @@ categories = ["command-line-utilities"]
 readme = "README.md"
 
 [dependencies]
-custom_error = "1.6"
-log = "0.4"
-simplelog = "0.6"
 clap = "2.33"
-crossterm = "0.9.6"
-termimad = "0.5.0"
+crossterm = "0.13.2"
+custom_error = "1.6"
+lazy_static = "1.4"
+log = "0.4"
+minimad = "0.5.0"
+simplelog = "0.6"
+termimad = "0.8.0"
