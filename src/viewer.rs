@@ -1,8 +1,8 @@
 use crossterm::{
     cursor,
-    input::{self, InputEvent, KeyEvent},
+    event::{self, Event, KeyEvent, KeyCode},
     queue,
-    screen::{EnterAlternateScreen, LeaveAlternateScreen, RawScreen},
+    terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
     style::Color::*,
 };
 use std::{
@@ -14,16 +14,15 @@ use termimad::{Alignment, Area, MadSkin, MadView, Result};
 
 fn run_scrollable(w: &mut io::Stderr, area: Area, skin: MadSkin, markdown: &str) -> Result<()> {
     let mut view = MadView::from(markdown.to_owned(), area, skin);
-    let mut events = input::input().read_sync();
     loop {
         view.write_on(w)?;
         w.flush()?;
-        if let Some(InputEvent::Keyboard(key)) = events.next() {
-            match key {
-                KeyEvent::Up => view.try_scroll_lines(-1),
-                KeyEvent::Down => view.try_scroll_lines(1),
-                KeyEvent::PageUp => view.try_scroll_pages(-1),
-                KeyEvent::PageDown => view.try_scroll_pages(1),
+        if let Event::Key(KeyEvent{code, ..}) = event::read()? {
+            match code {
+                KeyCode::Up => view.try_scroll_lines(-1),
+                KeyCode::Down => view.try_scroll_lines(1),
+                KeyCode::PageUp => view.try_scroll_pages(-1),
+                KeyCode::PageDown => view.try_scroll_pages(1),
                 _ => break,
             }
         }
@@ -67,7 +66,7 @@ pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<()> {
         let mut w = std::io::stderr();
         queue!(w, EnterAlternateScreen)?;
         queue!(w, cursor::Hide)?; // hiding the cursor
-        let _raw_screen = RawScreen::into_raw_mode()?;
+        terminal::enable_raw_mode()?;
         let mut main_area = Area::full_screen();
         main_area.pad(0, 1);
         show_path(&mut w, 0, &skin, &target)?;
