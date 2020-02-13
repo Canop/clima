@@ -19,6 +19,8 @@ and build and install `clima`
     cd clima
     cargo install --path .
 
+(note that clima needs at least rustc 1.4)
+
 ## Usage
 
 To open a file in the viewer, just pass its path:
