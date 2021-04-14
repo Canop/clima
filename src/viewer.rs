@@ -37,6 +37,8 @@ fn run_scrollable(w: &mut io::Stderr, area: Area, skin: MadSkin, markdown: &str)
                 Down => view.try_scroll_lines(1),
                 PageUp => view.try_scroll_pages(-1),
                 PageDown => view.try_scroll_pages(1),
+                Char('k') => view.try_scroll_lines(-1),
+                Char('j') => view.try_scroll_lines(1),
                 _ => break,
             }
         }
