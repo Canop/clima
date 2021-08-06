@@ -1,7 +1,8 @@
 //! Definitions of custom errors used in clima
-use custom_error::custom_error;
-use std::io;
-use termimad;
+use {
+    custom_error::custom_error,
+    std::io,
+};
 
 custom_error! {pub ProgramError
     NoPathProvided { } = "No Path Provided",

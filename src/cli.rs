@@ -1,9 +1,11 @@
 /// this module manages reading and translating
 /// the arguments passed on launch of the application.
-use crate::errors::ProgramError;
-use clap;
-use std::path::PathBuf;
-use std::result::Result;
+use {
+    crate::errors::ProgramError,
+    std::{
+        path::PathBuf,
+    },
+};
 
 pub struct AppLaunchArgs {
     pub target: PathBuf,
@@ -31,14 +33,14 @@ pub fn read_launch_args() -> Result<AppLaunchArgs, ProgramError> {
         }
     };
     if !target.exists() {
-        Err(ProgramError::FileNotFound {
+        return Err(ProgramError::FileNotFound {
             path: format!("{:?}", &target),
-        })?;
+        });
     }
     if target.is_dir() {
-        Err(ProgramError::NotRegular {
+        return Err(ProgramError::NotRegular {
             path: format!("{:?}", &target),
-        })?;
+        });
     }
     let target = target.canonicalize()?;
     let just_print = cli_args.is_present("print");

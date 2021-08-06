@@ -10,7 +10,6 @@ use {
             KeyCode::*,
         },
         terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
-        style::Color::*,
         QueueableCommand,
     },
     std::{
@@ -18,9 +17,7 @@ use {
         io::{self, Write},
         path::Path,
     },
-    termimad::{
-        Alignment, Area, MadSkin, MadView, Result,
-    },
+    termimad::{Area, MadSkin, MadView, Result, mad_write_inline},
 };
 
 fn run_scrollable(w: &mut io::Stderr, area: Area, skin: MadSkin, markdown: &str) -> Result<()> {
@@ -62,20 +59,10 @@ fn show_help(w: &mut io::Stderr, y: u16, skin: &MadSkin) -> Result<()> {
     )
 }
 
-fn make_skin() -> MadSkin {
-    let mut skin = MadSkin::default();
-    skin.table.align = Alignment::Center;
-    skin.set_headers_fg(Yellow);
-    skin.bold.set_fg(Yellow);
-    skin.italic.set_fg(White);
-    skin.scrollbar.thumb.set_fg(AnsiValue(178));
-    skin
-}
-
 pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<()> {
     let target = launch_args.target;
     let markdown = fs::read_to_string(&target)?;
-    let skin = make_skin();
+    let skin = MadSkin::default();
 
     if launch_args.just_print {
         skin.print_text(&markdown);

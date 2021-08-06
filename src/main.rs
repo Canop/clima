@@ -1,24 +1,20 @@
 #[macro_use]
-extern crate minimad;
-#[macro_use]
-extern crate lazy_static;
-#[macro_use]
 extern crate log;
-#[macro_use]
-extern crate termimad;
 
 mod cli;
 mod errors;
 mod viewer;
 
-use log::LevelFilter;
-use simplelog;
-use std::env;
-use std::fs::File;
-use std::result::Result;
-use std::str::FromStr;
+use {
+    crate::errors::ProgramError,
+    log::LevelFilter,
+    std::{
+        env,
+        fs::File,
+        str::FromStr,
+    },
+};
 
-use crate::errors::ProgramError;
 
 /// configure the application log according to env variable.
 ///
