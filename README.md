@@ -1,3 +1,14 @@
+[![Latest Version][s1]][l1] [![MIT][s2]][l2] [![Chat on Miaou][s3]][l3]
+
+[s1]: https://img.shields.io/crates/v/clima.svg
+[l1]: https://crates.io/crates/clima
+
+[s2]: https://img.shields.io/badge/license-MIT-blue.svg
+[l2]: LICENSE
+
+[s3]: https://miaou.dystroy.org/static/shields/room.svg
+[l3]: https://miaou.dystroy.org/3768?rust
+
 # Clima
 
 A viewer for Termimad.
