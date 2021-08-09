@@ -35,6 +35,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 
 [[package]]
+name = "cc"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e70cc2f62c6ce1868963827bd677764c62d07c3d9a3e1fb1177ee1a9ab199eb2"
+
+[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -80,6 +86,7 @@ dependencies = [
  "minimad",
  "simplelog",
  "termimad",
+ "terminal-light",
 ]
 
 [[package]]
@@ -270,6 +277,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "nix"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf1e25ee6b412c2a1e3fcb6a4499a5c1bfe7f43e014bdce9a6b6666e5aa2d187"
+dependencies = [
+ "bitflags",
+ "cc",
+ "cfg-if",
+ "libc",
+ "memoffset",
+]
+
+[[package]]
 name = "ntapi"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -436,15 +456,26 @@ dependencies = [
 
 [[package]]
 name = "termimad"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e488f62ec9f9b5d9e8bb5ca502f684749a43faa7f24b71d62a3b7ffa1db5d14e"
+checksum = "f97a06798c64fce2120a9a89413c33c55e9c6ad85654774aaf7c1d279018c639"
 dependencies = [
  "crossbeam",
  "crossterm",
  "minimad",
  "thiserror",
  "unicode-width",
+]
+
+[[package]]
+name = "terminal-light"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0258665893e51c4d03c4b8ec50f096c350227450ddeb7d2c10b7480b538ab29"
+dependencies = [
+ "crossterm",
+ "nix",
+ "thiserror",
 ]
 
 [[package]]

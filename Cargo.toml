@@ -12,13 +12,14 @@ readme = "README.md"
 
 [dependencies]
 clap = "2.33"
-crossterm = "=0.20"
+crossterm = "0.20"
 custom_error = "1.9"
 lazy_static = "1.4"
 log = "0.4"
 minimad = "0.8"
 simplelog = "0.10"
-termimad = "0.14.1"
+termimad = "0.14.2"
+terminal-light = "0.2"
 
 [patch.crates-io]
 # minimad = { path = "../minimad" }

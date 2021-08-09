@@ -59,10 +59,18 @@ fn show_help(w: &mut io::Stderr, y: u16, skin: &MadSkin) -> Result<()> {
     )
 }
 
+fn make_skin() -> MadSkin {
+    match terminal_light::luma() {
+        Ok(luma) if luma > 0.6 => MadSkin::default_light(),
+        Ok(luma) => MadSkin::default_dark(),
+        Err(_) => MadSkin::default(), // this skin works in both light and dark
+    }
+}
+
 pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<()> {
     let target = launch_args.target;
     let markdown = fs::read_to_string(&target)?;
-    let skin = MadSkin::default();
+    let skin = make_skin();
 
     if launch_args.just_print {
         skin.print_text(&markdown);
