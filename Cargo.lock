@@ -76,7 +76,7 @@ dependencies = [
 
 [[package]]
 name = "clima"
-version = "0.0.9"
+version = "0.0.10"
 dependencies = [
  "clap",
  "crossterm",
@@ -469,9 +469,9 @@ dependencies = [
 
 [[package]]
 name = "terminal-light"
-version = "0.2.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d0258665893e51c4d03c4b8ec50f096c350227450ddeb7d2c10b7480b538ab29"
+checksum = "202dd4889a2810ad7124ae6487d2583084882f0eb766ba52bb3b08d955dbe22e"
 dependencies = [
  "crossterm",
  "nix",
