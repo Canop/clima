@@ -5,6 +5,7 @@ use {
     std::{
         path::PathBuf,
     },
+    cfg_if,
 };
 
 pub struct AppLaunchArgs {
@@ -27,7 +28,19 @@ fn get_cli_args<'a>() -> clap::ArgMatches<'a> {
 pub fn read_launch_args() -> Result<AppLaunchArgs, ProgramError> {
     let cli_args = get_cli_args();
     let target = match cli_args.value_of("target") {
-        Some(path) => PathBuf::from(path),
+        Some(path) => {
+            cfg_if::cfg_if! {
+                if #[cfg(feature = "web")] {
+                    if path.starts_with("https") {
+                        link_to_tempbuf(path)?
+                    } else {
+                        PathBuf::from(path)
+                    }
+                } else {
+                    PathBuf::from(path)
+                }
+            }
+        },
         None => {
             return Err(ProgramError::NoPathProvided {});
         }
@@ -48,4 +61,39 @@ pub fn read_launch_args() -> Result<AppLaunchArgs, ProgramError> {
         target,
         just_print,
     })
+}
+
+/// Optional feature to take a target whose value is
+/// a URL
+#[cfg(feature = "web")]
+fn link_to_tempbuf(url: &str) -> Result<PathBuf, ProgramError> {
+    use std::fs::File;
+    use std::io::prelude::*;
+    use std::path::Path;
+    use crate::constants::CLIMA_WEB;
+
+    impl From<reqwest::Error> for ProgramError {
+        fn from(_: reqwest::Error) -> Self {
+            ProgramError::NoPathProvided { }
+        }
+    }
+    
+    let temp_path = Path::new(CLIMA_WEB);
+    let display = temp_path.display();
+    let mut file = match File::create(&temp_path) {
+        Err(why) => panic!("couldn't create {}: {}", display, why),
+        Ok(file) => file,
+    };
+    let res = reqwest::blocking::get(url)?.text(); 
+    match res {
+        Ok(md) => {
+            file.write_all(md.as_bytes())?;
+            Ok(temp_path.to_path_buf())
+        },
+        Err(_) => {
+            Err(ProgramError::FileNotFound {
+                path: format!("{:?}", &url),
+            })
+        }
+    }
 }

@@ -4,9 +4,11 @@ extern crate log;
 mod cli;
 mod errors;
 mod viewer;
+mod constants;
 
 use {
     crate::errors::ProgramError,
+    cfg_if,
     log::LevelFilter,
     std::{
         env,
@@ -14,6 +16,7 @@ use {
         str::FromStr,
     },
 };
+
 
 
 /// configure the application log according to env variable.
@@ -48,6 +51,11 @@ fn configure_log() {
 fn run() -> Result<(), ProgramError> {
     configure_log();
     viewer::run(cli::read_launch_args()?)?;
+    cfg_if::cfg_if! {
+        if #[cfg(feature = "web")] {
+            let _unlink = ::std::fs::remove_file(constants::CLIMA_WEB)?;
+        }
+    }
     Ok(())
 }
 
