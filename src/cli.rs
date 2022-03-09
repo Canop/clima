@@ -31,7 +31,7 @@ pub fn read_launch_args() -> Result<AppLaunchArgs, ProgramError> {
         Some(path) => {
             cfg_if::cfg_if! {
                 if #[cfg(feature = "web")] {
-                    if path.starts_with("https") {
+                    if path.starts_with("https://") && !PathBuf::from(path).exists() {
                         link_to_tempbuf(path)?
                     } else {
                         PathBuf::from(path)
