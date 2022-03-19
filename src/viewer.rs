@@ -17,10 +17,21 @@ use {
         io::{self, Write},
         path::Path,
     },
-    termimad::{Area, MadSkin, MadView, Result, mad_write_inline},
+    termimad::{
+        Area,
+        Error as TermimadError,
+        MadSkin,
+        MadView,
+        mad_write_inline,
+    },
 };
 
-fn run_scrollable(w: &mut io::Stderr, area: Area, skin: MadSkin, markdown: &str) -> Result<()> {
+fn run_scrollable(
+    w: &mut io::Stderr,
+    area: Area,
+    skin: MadSkin,
+    markdown: &str,
+) -> Result<(), TermimadError> {
     terminal::enable_raw_mode()?;
     let mut view = MadView::from(markdown.to_owned(), area, skin);
     loop {
@@ -44,13 +55,22 @@ fn run_scrollable(w: &mut io::Stderr, area: Area, skin: MadSkin, markdown: &str)
     Ok(())
 }
 
-fn show_path(w: &mut io::Stderr, y: u16, skin: &MadSkin, target: &Path) -> Result<()> {
+fn show_path(
+    w: &mut io::Stderr,
+    y: u16,
+    skin: &MadSkin,
+    target: &Path,
+) -> Result<(), TermimadError> {
     w.queue(cursor::MoveTo(0, y))?;
     let path = target.to_string_lossy();
     mad_write_inline!(w, skin, "**Clima >** *$0*", &path)
 }
 
-fn show_help(w: &mut io::Stderr, y: u16, skin: &MadSkin) -> Result<()> {
+fn show_help(
+    w: &mut io::Stderr,
+    y: u16,
+    skin: &MadSkin,
+) -> Result<(), TermimadError> {
     w.queue(cursor::MoveTo(0, y))?;
     mad_write_inline!(
         w,
@@ -67,7 +87,7 @@ fn make_skin() -> MadSkin {
     }
 }
 
-pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<()> {
+pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<(), TermimadError> {
     let target = launch_args.target;
     let markdown = fs::read_to_string(&target)?;
     let skin = make_skin();
