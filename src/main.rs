@@ -3,10 +3,14 @@ extern crate log;
 
 mod cli;
 mod errors;
+mod open;
 mod viewer;
 
 use {
-    crate::errors::ProgramError,
+    crate::{
+        cli::get_cli_args,
+        errors::ProgramError,
+    },
     log::LevelFilter,
     std::{
         env,
@@ -47,8 +51,15 @@ fn configure_log() {
 /// which must be run after clima
 fn run() -> Result<(), ProgramError> {
     configure_log();
-    viewer::run(cli::read_launch_args()?)?;
-    Ok(())
+    let cli_args = get_cli_args();
+    let target = match cli_args.value_of("target") {
+        Some(path) => path.to_string(),
+        None => {
+            return Err(ProgramError::NoPathProvided {});
+        }
+    };
+    let md_file = target.parse()?;
+    viewer::run(md_file, cli_args.is_present("print"))
 }
 
 fn main() {

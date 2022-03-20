@@ -37,6 +37,8 @@ To open a file in the viewer, just pass its path:
 
     clima README.md
 
+It's possible to pass the URL of a markdown file as argument, too.
+
 If you add the `--print` option, the file is just printed to stdout, the scrollable viewer doesn't appear:
 
     clima -p README.md

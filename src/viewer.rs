@@ -1,4 +1,8 @@
 use {
+    crate::{
+        errors::ProgramError,
+        open::MdFile,
+    },
     crossterm::{
         cursor,
         event::{
@@ -12,11 +16,7 @@ use {
         terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
         QueueableCommand,
     },
-    std::{
-        fs,
-        io::{self, Write},
-        path::Path,
-    },
+    std::io::{self, Write},
     termimad::{
         Area,
         Error as TermimadError,
@@ -59,11 +59,10 @@ fn show_path(
     w: &mut io::Stderr,
     y: u16,
     skin: &MadSkin,
-    target: &Path,
+    path: &str,
 ) -> Result<(), TermimadError> {
     w.queue(cursor::MoveTo(0, y))?;
-    let path = target.to_string_lossy();
-    mad_write_inline!(w, skin, "**Clima >** *$0*", &path)
+    mad_write_inline!(w, skin, "**Clima >** *$0*", path)
 }
 
 fn show_help(
@@ -87,23 +86,23 @@ fn make_skin() -> MadSkin {
     }
 }
 
-pub fn run(launch_args: crate::cli::AppLaunchArgs) -> Result<(), TermimadError> {
-    let target = launch_args.target;
-    let markdown = fs::read_to_string(&target)?;
+pub fn run(
+    file: MdFile,
+    just_print: bool,
+) -> Result<(), ProgramError> {
     let skin = make_skin();
-
-    if launch_args.just_print {
-        skin.print_text(&markdown);
+    if just_print {
+        skin.print_text(&file.markdown);
     } else {
         let mut w = std::io::stderr();
         w.queue(EnterAlternateScreen)?;
         w.queue(cursor::Hide)?; // hiding the cursor
         let mut main_area = Area::full_screen();
         main_area.pad(0, 1);
-        show_path(&mut w, 0, &skin, &target)?;
+        show_path(&mut w, 0, &skin, &file.path)?;
         show_help(&mut w, main_area.top + main_area.height + 1, &skin)?;
         w.queue(EnableMouseCapture)?;
-        run_scrollable(&mut w, main_area, skin, &markdown)?;
+        run_scrollable(&mut w, main_area, skin, &file.markdown)?;
         w.queue(DisableMouseCapture)?;
         w.queue(cursor::Show)?;
         w.queue(LeaveAlternateScreen)?;
