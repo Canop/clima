@@ -1,2 +1,5 @@
 /target/
 /build/
+/releases/
+/clima*.zip
+.bacon-locations

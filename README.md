@@ -20,7 +20,7 @@ Which isn't really useful as Termimad hasn't been designed to display any markdo
 
 Clima is thus *not a general purpose Markdown viewer* but can be used to try out or fix some markdown you'd like to incorporate into your terminal application using Termimad and that you prefer to edit as a file.
 
-## Installation
+## Installation from source
 
 Download the Repository
 
@@ -31,13 +31,19 @@ and build and install `clima`
     cd clima
     cargo install --path .
 
+## Precompiled binaries
+
+They're available at https://dystroy.org/clima
+
 ## Usage
 
 To open a file in the viewer, just pass its path:
 
     clima README.md
 
-It's possible to pass the URL of a markdown file as argument, too.
+You can also provide the URL of a markdown file or of a github repository:
+
+    clima https://github.com/Canop/broot
 
 If you add the `--print` option, the file is just printed to stdout, the scrollable viewer doesn't appear:
 
