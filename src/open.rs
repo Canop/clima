@@ -49,7 +49,7 @@ impl FromStr for MdFile {
         }
         // if it's a link to a github repo, we go fetch the raw readme
         if let Some((_, user, repo)) = regex_captures!(
-            r#"^(?:https://github.com/)?(\w[\w-]{1,38})/(\w[\w-]{1,50})/?$"#,
+            r#"^(?:https://github.com/)?([a-zA-Z0-9][[a-zA-Z0-9]-]{1,38})/([a-zA-Z0-9][[a-zA-Z0-9]-]{1,50})/?$"#,
             target,
         ) {
             return Self::from_url(
@@ -59,7 +59,7 @@ impl FromStr for MdFile {
         // if it's a link to a md file at github, we fetch it raw
         //if let Some((_, path)) = regex_captures!(r#"^https://github.com/(\S+\.md)$"#i, target) {
         if let Some((_, user, repo, path)) = regex_captures!(
-            r#"^(?:https://github.com/)?(\w[\w-]{1,38})/(\w[\w-]{1,50})/blob/(\S+\.md)$$"#,
+            r#"^(?:https://github.com/)?([a-zA-Z0-9][[a-zA-Z0-9]-]{1,38})/([a-zA-Z0-9][[a-zA-Z0-9]-]{1,50})/blob/(\S+\.md)$$"#,
             target
         ) {
             return Self::from_url(
