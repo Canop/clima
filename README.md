@@ -50,3 +50,8 @@ If you add the `--print` option, the file is just printed to stdout, the scrolla
     clima -p README.md
 
 
+With the `--skin` argument, you can provide a Termimad skin file, either as JSON or Hjson:
+
+    clima --skin skin.hjson
+
+(this repository contains an example of such skin)

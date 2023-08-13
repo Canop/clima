@@ -1,0 +1,21 @@
+# A termimad skin that you can use with the --skin argument
+#
+# When two colors are provided, the first one is foreground
+# and the second one background. If you want to set only
+# background, use none for the foreground, eg 'none red'.
+
+bold: "#fb0 bold"
+italic: dim italic
+strikeout: crossedout red
+bullet: ○ yellow bold
+paragraph: gray(20)
+code_block: gray(2) gray(15)
+headers: [
+    yellow bold center
+    yellow underlined
+    yellow
+]
+quote: > red
+horizontal-rule: "~ #00cafe"
+table: "#540 center"
+scrollbar: "#fb0 gray(11) |"

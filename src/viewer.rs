@@ -3,19 +3,6 @@ use {
         errors::ProgramError,
         open::MdFile,
     },
-    crossterm::{
-        cursor,
-        event::{
-            self,
-            DisableMouseCapture,
-            EnableMouseCapture,
-            Event,
-            KeyEvent,
-            KeyCode::*,
-        },
-        terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
-        QueueableCommand,
-    },
     std::io::{self, Write},
     termimad::{
         Area,
@@ -23,6 +10,19 @@ use {
         MadSkin,
         MadView,
         mad_write_inline,
+        crossterm::{
+            cursor,
+            event::{
+                self,
+                DisableMouseCapture,
+                EnableMouseCapture,
+                Event,
+                KeyEvent,
+                KeyCode::*,
+            },
+            terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
+            QueueableCommand,
+        },
     },
 };
 
@@ -78,19 +78,11 @@ fn show_help(
     )
 }
 
-fn make_skin() -> MadSkin {
-    match terminal_light::luma() {
-        Ok(luma) if luma > 0.6 => MadSkin::default_light(),
-        Ok(_) => MadSkin::default_dark(),
-        Err(_) => MadSkin::default(), // this skin works in both light and dark
-    }
-}
-
 pub fn run(
     file: MdFile,
+    skin: MadSkin,
     just_print: bool,
 ) -> Result<(), ProgramError> {
-    let skin = make_skin();
     if just_print {
         skin.print_text(&file.markdown);
     } else {
