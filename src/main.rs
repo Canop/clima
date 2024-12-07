@@ -31,7 +31,7 @@ fn main() -> Result<(), ProgramError> {
     let md_file = target.parse()?;
     let skin = match cli_args.value_of("skin") {
         Some(path) => {
-            let hjson = fs::read_to_string(&path)?;
+            let hjson = fs::read_to_string(path)?;
             deser_hjson::from_str(&hjson)?
         }
         None => make_skin(),

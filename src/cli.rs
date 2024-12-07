@@ -1,5 +1,5 @@
-/// this module manages reading and translating
-/// the arguments passed on launch of the application.
+//! this module manages reading and translating
+//! the arguments passed on launch of the application.
 
 /// declare the possible CLI arguments, and gets the values
 pub fn get_cli_args<'a>() -> clap::ArgMatches<'a> {

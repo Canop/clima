@@ -127,7 +127,7 @@ dependencies = [
 
 [[package]]
 name = "clima"
-version = "1.1.0"
+version = "1.1.1"
 dependencies = [
  "clap",
  "cli-log",
