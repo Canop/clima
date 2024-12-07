@@ -20,7 +20,7 @@ lazy-regex = "2.2.2"
 lazy_static = "1.4"
 reqwest = { version = "0.11.9", default-features=false, features = ["blocking", "rustls-tls"]}
 serde = { version = "1.0", features = ["derive"] }
-termimad = "0.24.0"
+termimad = "0.31.1"
 terminal-light = "1.0.0"
 
 [profile.release]
